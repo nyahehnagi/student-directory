@@ -4,7 +4,6 @@ class String
   end
 end
 
-# put students into an array of hashes
 def print_header
   puts "The students of Villains Academy"
   puts "-------------"
