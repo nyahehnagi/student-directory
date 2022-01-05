@@ -86,6 +86,3 @@ students = input_students
 print_header
 print_students_by_cohort(students)
 print_footer(students)
-
-#people.map { |person| [person[category], person["name"]] }
-#.group_by { |name_cat| name_cat.shift }
