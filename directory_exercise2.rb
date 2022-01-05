@@ -1,3 +1,9 @@
+class String
+  def initial
+    self.chr
+  end
+end
+
 # put students into an array of hashes
 def print_header
   puts "The students of Villains Academy"
@@ -5,8 +11,18 @@ def print_header
 end
 
 def print(students)
+  students.each_with_index do |student, idx|
+    puts "#{idx + 1} #{student[:name]} (#{student[:cohort]} cohort)"
+  end
+end
+
+def print_with_letter(students)
+  puts "Please enter a letter"
+  letter = gets.chomp.upcase 
   students.each do |student|
-    puts "#{student[:name]} (#{student[:cohort]} cohort)"
+    if student[:name].initial.upcase == letter
+      puts "#{student[:name]} (#{student[:cohort]} cohort)"
+    end
   end
 end
 
@@ -38,4 +54,7 @@ students = input_students
 print_header
 print(students)
 print_footer(students)
+
+print_with_letter(students)
+
 
