@@ -1,5 +1,7 @@
 @students = [] # array to be accessible to all methods
 
+
+
 def print_header
   puts "The students of Villains Academy"
   puts "-------------"
@@ -13,11 +15,20 @@ end
 
 def print_footer
   # print the number of students
+  print "Overall, "
+  print_number_of_students
+end
+
+def print_number_of_students
   if @students.count != 1
-    puts "Overall, we have #{@students.count} great students"
+    puts "we have #{@students.count} great students"
   else
-    puts "Overall, we have #{@students.count} great student"
+    puts "we have #{@students.count} great student"
   end
+end
+
+def add_student(name, cohort = "november")
+  @students << {name: name, cohort: cohort.to_sym}
 end
 
 def input_students
@@ -29,12 +40,10 @@ def input_students
   # while the name is not empty, repeat this code
   while !name.empty? do
     # add the student hash to the array
-    @students << {name: name, cohort: :november}
-    if @students.count != 1 
-      puts "Now we have #{@students.count} students"
-    else
-      puts "Now we have #{@students.count} student"
-    end
+    add_student(name)
+
+    print "Now, "
+    print_number_of_students
 
     # get another name from the user
     name = STDIN.gets.chomp
@@ -56,7 +65,7 @@ def show_students
   print_footer
 end
 
-def process(selection)
+def process_user_input(selection)
   case selection
   when "1"
     input_students
@@ -91,21 +100,20 @@ def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+    add_student(name, cohort)
   end
   file.close
 end
 
 def try_load_students
   filename = ARGV.first # first argument from the command line
-  return if filename.nil? # get out of the method if it isn't given
 
-  if File.exist?(filename) # if it exists
+  if !filename.nil? && File.exist?(filename)   # if it is not nil and exists
     load_students(filename)
     puts "Loaded #{@students.count} from #{filename}"
-  else # if it doesn't exist
-    puts "Sorry, #{filename} doesn't exist."
-    exit # quit the program
+  else # if it doesn't exist or nil
+    load_students
+    puts "Loaded #{@students.count} from default file"
   end
 end
 
@@ -113,7 +121,7 @@ def interactive_menu
   loop do
     print_menu
     # read the input and process 
-    process(STDIN.gets.chomp)
+    process_user_input(STDIN.gets.chomp)
   end
 end
 
