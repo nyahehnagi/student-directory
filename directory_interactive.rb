@@ -1,6 +1,13 @@
 @students = [] # array to be accessible to all methods
 
-
+# using lambda more to see how it works than anything else.
+@user_options = {
+  "1" => ->{ input_students },
+  "2" => ->{ show_students },
+  "3" => ->{ save_students },
+  "4" => ->{ load_students },
+  "9" => ->{ exit }
+}
 
 def print_header
   puts "The students of Villains Academy"
@@ -29,6 +36,7 @@ end
 
 def add_student(name, cohort = "november")
   @students << {name: name, cohort: cohort.to_sym}
+  puts "#{name} succesfully added"
 end
 
 def input_students
@@ -54,8 +62,8 @@ end
 def print_menu
     puts "1. Input the students"
     puts "2. Show the students"
-    puts "3. Save the list to students.csv"
-    puts "4. Load the list from students.csv"
+    puts "3. Save students to file"
+    puts "4. Load students from file"
     puts "9. Exit" 
 end
 
@@ -66,25 +74,23 @@ def show_students
 end
 
 def process_user_input(selection)
-  case selection
-  when "1"
-    input_students
-  when "2"
-    show_students
-  when "3"
-    save_students
-  when "4"
-    load_students
-  when "9"
-    exit # this will cause the program to terminate
+  # Is a process available for the selected made?
+  if @user_options.key?(selection) 
+     @user_options[selection].call 
   else
-    puts "I don't know what you meant, try again"
+      puts "Invalid option, please try again"
   end
+end
+
+def get_filename_from_user
+  puts "Please enter filename"
+  STDIN.gets.chomp
 end
 
 def save_students
   # open file for writing
-  file = File.open("students.csv", "w")
+  save_file = get_filename_from_user
+  file = File.open(save_file, "w")
   # iterate over the array of students
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
@@ -92,9 +98,15 @@ def save_students
     file.puts csv_line
   end
   file.close
+  puts "Sucessfully saved students to #{save_file}"
 end
 
-def load_students(filename = "students.csv")
+def load_students
+  load_file = get_filename_from_user
+  load_students_from_file(load_file)
+end
+
+def load_students_from_file(filename = "students.csv")
   # clear @students
   @students = []
   file = File.open(filename, "r")
@@ -103,17 +115,16 @@ def load_students(filename = "students.csv")
     add_student(name, cohort)
   end
   file.close
+  puts "Loaded #{@students.count} students from #{filename}"
 end
 
 def try_load_students
   filename = ARGV.first # first argument from the command line
 
   if !filename.nil? && File.exist?(filename)   # if it is not nil and exists
-    load_students(filename)
-    puts "Loaded #{@students.count} from #{filename}"
-  else # if it doesn't exist or nil
-    load_students
-    puts "Loaded #{@students.count} from default file"
+    load_students_from_file(filename)
+  else # if it doesn't exist or nil, call with defaul values
+    load_students_from_file
   end
 end
 
