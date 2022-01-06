@@ -1,3 +1,5 @@
+require 'csv'
+
 @students = [] # array to be accessible to all methods
 
 # using lambda more to see how it works than anything else.
@@ -47,16 +49,13 @@ def input_students
   name = STDIN.gets.chomp
   # while the name is not empty, repeat this code
   while !name.empty? do
-    # add the student hash to the array
     add_student(name)
 
     print "Now, "
     print_number_of_students
-
-    # get another name from the user
+    
     name = STDIN.gets.chomp
   end
-  # return the array of students
 end
 
 def print_menu
@@ -90,12 +89,10 @@ end
 def save_students
   # open file for writing
   save_file = get_filename_from_user
-  file = File.open(save_file, "w") do |file|
-    # iterate over the array of students
+
+  CSV.open(save_file, "w") do |csv|
     @students.each do |student|
-      student_data = [student[:name], student[:cohort]]
-      csv_line = student_data.join(",")
-      file.puts csv_line
+      csv << [student[:name], student[:cohort]]
     end
   end
 
@@ -110,12 +107,10 @@ end
 def load_students_from_file(filename = "students.csv")
   # clear @students
   @students = []
-
-  File.foreach(filename) do |line|
-    name, cohort = line.chomp.split(',')
+  CSV.parse(File.read(filename)) do |row|
+    name, cohort = row
     add_student(name, cohort)
   end
-
   puts "Loaded #{@students.count} students from #{filename}"
 end
 

@@ -29,7 +29,6 @@ def print_students_by_cohort(students)
       end
     end
   end
-
 end
 
 def input_students
