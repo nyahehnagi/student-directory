@@ -83,16 +83,7 @@ def input_students
   students
 end
 
-students_test_data = [
-  { name: 'Bromley Jones', cohort: :november, hobbies: %w[Cycling Gaming] },
-  { name: 'Kirsty Edwards', cohort: :default, hobbies: ['Baking'] },
-  { name: 'Monty Jones', cohort: :default, hobbies: ['Playing'] },
-  { name: 'Clover Jones', cohort: :november, hobbies: ['Being Cute', 'Unicorns'] },
-  { name: 'Callisto Cat', cohort: :november, hobbies: %w[Sleeping Mousing] }
-]
-
 students = input_students
-# students = students_test_data
 print_header
 print_students_by_cohort(students)
 print_footer(students)

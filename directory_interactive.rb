@@ -83,14 +83,14 @@ def process_user_input(selection)
   end
 end
 
-def get_filename_from_user
+def filename_from_user
   puts 'Please enter filename'
   $stdin.gets.chomp
 end
 
 def save_students
   # open file for writing
-  save_file = get_filename_from_user
+  save_file = filename_from_user
 
   CSV.open(save_file, 'w') do |csv|
     @students.each do |student|
@@ -102,7 +102,7 @@ def save_students
 end
 
 def load_students
-  load_file = get_filename_from_user
+  load_file = filename_from_user
   load_students_from_file(load_file)
 end
 

@@ -17,6 +17,20 @@ def print_footer(names)
   puts "Overall, we have #{names.count} great students"
 end
 
+def input_hobbies(name)
+  # Enter Hobbies
+  puts "Please enter the hobbies for #{name}"
+  puts 'To stop entering hobbies, hit return twice'
+  hobbies = []
+  hobby = gets.chomp
+  until hobby.empty?
+    hobbies << hobby
+    hobby = gets.chomp
+  end
+
+  hobbies
+end
+
 def input_students
   puts 'Please enter the names of the students'
   puts 'To finish, just hit return twice'
@@ -27,15 +41,7 @@ def input_students
   # while the name is not empty, repeat this code
   until name.empty?
     # Enter Hobbies
-    puts "Please enter the hobbies for #{name}"
-    puts 'To stop entering hobbies, hit return twice'
-    hobbies = []
-    hobby = gets.chomp
-    until hobby.empty?
-      hobbies << hobby
-      hobby = gets.chomp
-    end
-
+    hobbies = input_hobbies(name)
     # add the student hash to the array
     students << { name: name, cohort: :november, hobbies: hobbies }
     puts "Now we have #{students.count} student(s)"
