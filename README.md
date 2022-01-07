@@ -13,5 +13,5 @@ new files for each change. More for my own readability and also that some of the
 were not iterative on the previous exercise.
 
 For the last set of exercises the file directory_interactive.rb was created and all 
-changes were done on the same code base. Primarilu because these exercises were very
+changes were done on the same code base. Primarily because these exercises were very
 much on going refactoring.
