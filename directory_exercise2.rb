@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 class String
   def initial
-    self.chr
+    chr
   end
 end
 
 def print_header
-  puts "The students of Villains Academy"
-  puts "-------------"
+  puts 'The students of Villains Academy'
+  puts '-------------'
 end
 
 def print(students)
@@ -16,12 +18,10 @@ def print(students)
 end
 
 def print_with_letter(students)
-  puts "Please enter a letter"
-  letter = gets.chomp.upcase 
+  puts 'Please enter a letter'
+  letter = gets.chomp.upcase
   students.each do |student|
-    if student[:name].initial.upcase == letter
-      puts "#{student[:name]} (#{student[:cohort]} cohort)"
-    end
+    puts "#{student[:name]} (#{student[:cohort]} cohort)" if student[:name].initial.upcase == letter
   end
 end
 
@@ -31,16 +31,16 @@ def print_footer(names)
 end
 
 def input_students
-  puts "Please enter the names of the students"
-  puts "To finish, just hit return twice"
+  puts 'Please enter the names of the students'
+  puts 'To finish, just hit return twice'
   # create an empty array
   students = []
   # get the first name
   name = gets.chomp
   # while the name is not empty, repeat this code
-  while !name.empty? do
+  until name.empty?
     # add the student hash to the array
-    students << {name: name, cohort: :november}
+    students << { name: name, cohort: :november }
     puts "Now we have #{students.count} student(s)"
     # get another name from the user
     name = gets.chomp
@@ -55,5 +55,3 @@ print(students)
 print_footer(students)
 
 print_with_letter(students)
-
-
